@@ -81,12 +81,39 @@
             gap: 8px;
         }
 
-        /* PRODUCT CARD & GRID */
+        /* PRODUCT GRID (REGULER) */
         .product-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 12px;
             margin-bottom: 20px;
+        }
+
+        /* PRODUCT HORIZONTAL SCROLL (BESTSELLER) */
+        .bestseller-scroll {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .bestseller-scroll::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .bestseller-scroll::-webkit-scrollbar-thumb {
+            background: var(--accent-green);
+            border-radius: 4px;
+        }
+
+        .bestseller-scroll .product-card {
+            min-width: 170px;
+            max-width: 170px;
+            scroll-snap-align: start;
+            flex-shrink: 0;
         }
 
         .product-card {
@@ -193,9 +220,16 @@
             margin-bottom: 10px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.03);
             border: 1px solid var(--light-green);
+        }
+
+        .cart-checkbox {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary-green);
+            cursor: pointer;
         }
 
         .cart-item img {
@@ -228,12 +262,14 @@
             width: 100%;
             max-width: 480px;
             background: #fff;
-            padding: 12px 20px;
+            padding: 10px 15px;
             box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 10px;
             border-top: 1px solid var(--light-green);
+            box-sizing: border-box;
         }
 
         /* PROFILE PAGE DESAIN BARU */
@@ -445,7 +481,7 @@
     <!-- 1. BERANDA / HOME VIEW -->
     <div id="view-home" class="page-view active">
         <div class="section-title"><i class="fas fa-fire"></i> Produk Bestseller</div>
-        <div class="product-grid" id="bestseller-grid"></div>
+        <div class="bestseller-scroll" id="bestseller-grid"></div>
 
         <div class="section-title"><i class="fas fa-shoe-prints"></i> Koleksi Pilihan</div>
         <div class="product-grid" id="regular-grid"></div>
@@ -456,11 +492,11 @@
         <div class="section-title"><i class="fas fa-shopping-bag"></i> Keranjang Saya</div>
         <div id="cart-items-container"></div>
         <div class="cart-footer">
-            <div>
-                <span style="font-size: 0.8rem; color: var(--text-muted);">Total:</span>
-                <div id="cart-total-price" style="font-size: 1rem; font-weight: bold; color: var(--dark-green);">Rp 0</div>
+            <div style="flex-shrink: 0;">
+                <span style="font-size: 0.75rem; color: var(--text-muted);" id="cart-ongkir-label">Total (Inc. Ongkir Rp 5.000):</span>
+                <div id="cart-total-price" style="font-size: 0.95rem; font-weight: bold; color: var(--dark-green);">Rp 0</div>
             </div>
-            <button class="btn btn-buy" style="padding: 10px 20px;" onclick="goToCheckoutFromCart()">Lanjut Bayar</button>
+            <button class="btn btn-buy" style="padding: 10px 16px; flex: initial; min-width: 120px;" onclick="goToCheckoutFromCart()">Lanjut Bayar</button>
         </div>
     </div>
 
@@ -487,7 +523,7 @@
                     <div class="stat-label">Terverifikasi</div>
                 </div>
             </div>
-            
+
             <div class="profile-info-group">
                 <div class="info-row">
                     <i class="fas fa-envelope"></i>
@@ -525,7 +561,7 @@
     <!-- 5. CHECKOUT PAGE VIEW -->
     <div id="view-checkout" class="page-view">
         <div class="section-title"><i class="fas fa-file-invoice"></i> Konfirmasi Pesanan</div>
-        
+
         <div class="checkout-box">
             <strong>Alamat Pengiriman:</strong>
             <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">
@@ -548,6 +584,10 @@
         <div class="checkout-box">
             <strong>Ringkasan Produk:</strong>
             <div id="checkout-summary-items" style="margin-top: 10px;"></div>
+            <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-top:8px; color: var(--text-muted);">
+                <span>Ongkos Kirim (Flat):</span>
+                <strong>Rp 5.000</strong>
+            </div>
             <hr style="margin: 10px 0; border: none; border-top: 1px dashed #ccc;">
             <div style="display: flex; justify-content: space-between; font-weight: bold;">
                 <span>Total Tagihan:</span>
@@ -596,20 +636,22 @@
     </nav>
 
     <script>
-        // DATA TOTAL 9 PRODUK SEPATU (Sepatu Osmos dihapus total)
+        const SHIPPING_FEE = 5000; // Biaya Ongkir Rp 5.000
+
+        // DATA TOTAL 9 PRODUK SEPATU
         const products = [
             // 4 BESTSELLER
             { id: 1, name: "Sepatu Vachirawit", price: 2499000, isBestseller: true, image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80", desc: "Sepatu edisi terbatas dengan warna merah ikonik. Nyaman dipakai harian." },
             { id: 2, name: "Sepatu Bieber", price: 2899000, isBestseller: true, image: "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=500&q=80", desc: "Desain hypebeast bernuansa streetwear modern dengan bantalan empuk." },
             { id: 3, name: "Sepatu Jenner", price: 2199000, isBestseller: true, image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=500&q=80", desc: "Sepatu warna pastel kasual yang elegan dan modis di segala situasi." },
             { id: 4, name: "Sepatu Sies", price: 2650000, isBestseller: true, image: "https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=500&q=80", desc: "Silhouette klasik berbalut material premium yang kokoh dan tahan lama." },
-            
+
             // 5 REGULER
             { id: 5, name: "Sepatu Moncu", price: 1499000, isBestseller: false, image: "https://images.unsplash.com/photo-1515955656352-a1fa3ffcd111?w=500&q=80", desc: "Sneakers bernuansa biru klasik, cocok dikombinasikan dengan denim." },
-            
-            { id: 6, name: "Sepatu Bioa", price: 1599000, isBestseller: false, image: "https://images.unsplash.com/photo-1579338559194-a162d19bf842?w=500&q=80", desc: "Desain futuristik dengan fleksibilitas tinggi untuk workout santai." },
-            { id: 7, name: "Sepatu Waswac", price: 1399000, isBestseller: false, image: "https://images.unsplash.com/photo-1605348532760-6753d2c43329?w=500&q=80", desc: "Sepatu serba hitam yang simpel dan gagah untuk segala suasana." },
-            { id: 8, name: "Sepatu Rules", price: 1199000, isBestseller: false, image: "https://images.unsplash.com/photo-1511556532299-8f662fc26c06?w=500&q=80", desc: "Sepatu bergaya retro runner yang ramping dan ringan saat melangkah." }
+            { id: 6, name: "Sepatu Late", price: 1299000, isBestseller: false, image: "https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?w=500&q=80", desc: "Sepatu olahraga serbaguna dengan sirkulasi udara optimal." },
+            { id: 7, name: "Sepatu Bioa", price: 1599000, isBestseller: false, image: "https://images.unsplash.com/photo-1579338559194-a162d19bf842?w=500&q=80", desc: "Desain futuristik dengan fleksibilitas tinggi untuk workout santai." },
+            { id: 8, name: "Sepatu Waswac", price: 1399000, isBestseller: false, image: "https://images.unsplash.com/photo-1605348532760-6753d2c43329?w=500&q=80", desc: "Sepatu serba hitam yang simpel dan gagah untuk segala suasana." },
+            { id: 9, name: "Sepatu Rules", price: 1199000, isBestseller: false, image: "https://images.unsplash.com/photo-1511556532299-8f662fc26c06?w=500&q=80", desc: "Sepatu bergaya retro runner yang ramping dan ringan saat melangkah." }
         ];
 
         let cart = [];
@@ -675,7 +717,11 @@
         // ADD TO CART
         function addToCart(id) {
             const product = products.find(p => p.id === id);
-            cart.push(product);
+            cart.push({
+                cartId: Date.now() + Math.random(),
+                product: product,
+                selected: true
+            });
             updateCartBadge();
             alert(`${product.name} berhasil dimasukkan ke keranjang!`);
         }
@@ -690,28 +736,49 @@
             }
         }
 
+        // TOGGLE CHECKBOX ITEM KERANJANG
+        function toggleCartItemSelection(index) {
+            cart[index].selected = !cart[index].selected;
+            calculateCartTotal();
+        }
+
+        function calculateCartTotal() {
+            const totalPriceEl = document.getElementById('cart-total-price');
+            let itemTotal = 0;
+            let hasSelectedItems = false;
+
+            cart.forEach(item => {
+                if (item.selected) {
+                    itemTotal += item.product.price;
+                    hasSelectedItems = true;
+                }
+            });
+
+            // Jika ada item dicentang, tambahkan ongkir 5rb
+            let finalTotal = hasSelectedItems ? itemTotal + SHIPPING_FEE : 0;
+            totalPriceEl.innerText = formatRupiah(finalTotal);
+        }
+
         // RENDER CART
         function renderCart() {
             const container = document.getElementById('cart-items-container');
-            const totalPriceEl = document.getElementById('cart-total-price');
 
             if (cart.length === 0) {
                 container.innerHTML = `<div style="text-align:center; padding: 40px; color: var(--text-muted);">Keranjangmu masih kosong.</div>`;
-                totalPriceEl.innerText = "Rp 0";
+                document.getElementById('cart-total-price').innerText = "Rp 0";
                 return;
             }
 
             container.innerHTML = '';
-            let total = 0;
 
             cart.forEach((item, index) => {
-                total += item.price;
                 container.innerHTML += `
                     <div class="cart-item">
-                        <img src="${item.image}" alt="${item.name}">
+                        <input type="checkbox" class="cart-checkbox" ${item.selected ? 'checked' : ''} onchange="toggleCartItemSelection(${index})">
+                        <img src="${item.product.image}" alt="${item.product.name}">
                         <div class="cart-item-details">
-                            <div class="cart-item-title">${item.name}</div>
-                            <div class="cart-item-price">${formatRupiah(item.price)}</div>
+                            <div class="cart-item-title">${item.product.name}</div>
+                            <div class="cart-item-price">${formatRupiah(item.product.price)}</div>
                         </div>
                         <button style="border:none; background:none; color: #e63946; cursor:pointer;" onclick="removeFromCart(${index})">
                             <i class="fas fa-trash"></i>
@@ -720,7 +787,7 @@
                 `;
             });
 
-            totalPriceEl.innerText = formatRupiah(total);
+            calculateCartTotal();
         }
 
         function removeFromCart(index) {
@@ -737,11 +804,19 @@
         }
 
         function goToCheckoutFromCart() {
+            const selectedCartItems = cart.filter(item => item.selected);
+            
             if (cart.length === 0) {
                 alert("Keranjang kamu kosong!");
                 return;
             }
-            checkoutItems = [...cart];
+
+            if (selectedCartItems.length === 0) {
+                alert("Pilih minimal satu produk untuk di-checkout!");
+                return;
+            }
+
+            checkoutItems = selectedCartItems.map(item => item.product);
             openCheckout();
         }
 
@@ -751,10 +826,10 @@
             const totalEl = document.getElementById('checkout-total-price');
 
             container.innerHTML = '';
-            let total = 0;
+            let itemTotal = 0;
 
             checkoutItems.forEach(item => {
-                total += item.price;
+                itemTotal += item.price;
                 container.innerHTML += `
                     <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:5px;">
                         <span>${item.name}</span>
@@ -763,24 +838,26 @@
                 `;
             });
 
-            totalEl.innerText = formatRupiah(total);
+            let grandTotal = itemTotal + SHIPPING_FEE;
+            totalEl.innerText = formatRupiah(grandTotal);
         }
 
         // PROCESS CHECKOUT TO THANK YOU & ORDER STATUS
         function processCheckout() {
-            let total = checkoutItems.reduce((sum, item) => sum + item.price, 0);
+            let itemTotal = checkoutItems.reduce((sum, item) => sum + item.price, 0);
+            let grandTotal = itemTotal + SHIPPING_FEE;
 
             // Simpan ke status pesanan
             myOrders.unshift({
                 id: "VCZ-" + Math.floor(100000 + Math.random() * 900000),
                 items: [...checkoutItems],
-                total: total,
+                total: grandTotal,
                 status: "Dikemas",
                 date: new Date().toLocaleDateString('id-ID')
             });
 
-            // Kosongkan keranjang jika dibeli lewat keranjang
-            cart = cart.filter(c => !checkoutItems.includes(c));
+            // Hapus item yang baru saja di-checkout dari keranjang
+            cart = cart.filter(item => !item.selected);
             updateCartBadge();
 
             // Pindah ke Halaman Terima Kasih
@@ -804,7 +881,7 @@
                             <strong style="font-size:0.85rem;">#${order.id}</strong>
                             <span class="order-status-badge"><i class="fas fa-box"></i> ${order.status}</span>
                         </div>
-                        <div style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">${itemNames}</div>
+                        <div style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">${itemNames} (Inc. Ongkir Rp 5.000)</div>
                         <div style="font-size:0.85rem; font-weight:bold; color:var(--dark-green);">${formatRupiah(order.total)} (COD)</div>
                     </div>
                 `;
