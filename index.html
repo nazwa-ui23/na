@@ -236,43 +236,137 @@
             border-top: 1px solid var(--light-green);
         }
 
-        /* PROFILE PAGE */
+        /* PROFILE PAGE (LENGKAP & TIDAK KOSONG) */
         .profile-card {
             background: #fff;
-            border-radius: 12px;
+            border-radius: 16px;
             padding: 20px;
-            text-align: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
             border: 1px solid var(--light-green);
+            margin-bottom: 15px;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--light-green);
         }
 
         .profile-img {
-            width: 90px;
-            height: 90px;
+            width: 75px;
+            height: 75px;
             border-radius: 50%;
             object-fit: cover;
-            margin-bottom: 12px;
             border: 3px solid var(--accent-green);
         }
 
+        .profile-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--dark-green);
+        }
+
+        .profile-badge {
+            display: inline-block;
+            background-color: var(--light-green);
+            color: var(--dark-green);
+            font-size: 0.7rem;
+            font-weight: bold;
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-top: 4px;
+        }
+
+        .profile-stats {
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            background-color: var(--bg-color);
+            border-radius: 10px;
+            margin: 15px 0;
+            text-align: center;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-value {
+            font-weight: 700;
+            color: var(--dark-green);
+            font-size: 1.1rem;
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
         .profile-info-group {
-            text-align: left;
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px dashed var(--light-green);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .info-icon {
+            width: 32px;
+            height: 32px;
+            background-color: var(--light-green);
+            color: var(--dark-green);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            flex-shrink: 0;
         }
 
         .profile-label {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: var(--text-muted);
-            margin-bottom: 2px;
         }
 
         .profile-value {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 600;
             color: var(--text-dark);
-            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        .profile-menu {
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--light-green);
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--light-green);
+            color: var(--text-dark);
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .menu-item i {
+            color: var(--text-muted);
         }
 
         /* CHECKOUT & SUCCESS PAGE */
@@ -405,19 +499,77 @@
         </div>
     </div>
 
-    <!-- 3. PROFIL VIEW -->
+    <!-- 3. PROFIL VIEW (DIPERBARUI AGAR TIDAK KOSONG) -->
     <div id="view-profile" class="page-view">
         <div class="section-title"><i class="fas fa-user-circle"></i> Profil Saya</div>
+        
         <div class="profile-card">
-            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&q=80" alt="Foto Profil Azariya" class="profile-img">
-            <h3 style="color: var(--dark-green);">Azariya</h3>
+            <div class="profile-header">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&q=80" alt="Foto Profil Azariya" class="profile-img">
+                <div>
+                    <div class="profile-name">Azariya</div>
+                    <span class="profile-badge"><i class="fas fa-crown"></i> VIP Member</span>
+                </div>
+            </div>
+
+            <div class="profile-stats">
+                <div class="stat-item">
+                    <span class="stat-value" id="stat-order-count">0</span>
+                    <span class="stat-label">Pesanan</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="stat-cart-count">0</span>
+                    <span class="stat-label">Keranjang</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value">2</span>
+                    <span class="stat-label">Voucher</span>
+                </div>
+            </div>
             
             <div class="profile-info-group">
-                <div class="profile-label"><i class="fas fa-envelope"></i> Email</div>
-                <div class="profile-value">azariya.vaciza@email.com</div>
+                <div class="info-item">
+                    <div class="info-icon"><i class="fas fa-envelope"></i></div>
+                    <div>
+                        <div class="profile-label">Email</div>
+                        <div class="profile-value">azariya.vaciza@email.com</div>
+                    </div>
+                </div>
 
-                <div class="profile-label"><i class="fas fa-map-marker-alt"></i> Alamat Pengiriman</div>
-                <div class="profile-value">Jl. Cempaka Indah No. 45, Komplek Green Residence, Jakarta Selatan, 12410</div>
+                <div class="info-item">
+                    <div class="info-icon"><i class="fas fa-phone"></i></div>
+                    <div>
+                        <div class="profile-label">Nomor Telepon</div>
+                        <div class="profile-value">+62 812-3456-7890</div>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <div>
+                        <div class="profile-label">Alamat Pengiriman Utama</div>
+                        <div class="profile-value">Jl. Cempaka Indah No. 45, Komplek Green Residence, Jakarta Selatan, 12410</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-menu">
+            <div class="menu-item" onclick="switchTab('orders')">
+                <span><i class="fas fa-box" style="margin-right: 8px;"></i> Riwayat Pesanan</span>
+                <i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="menu-item">
+                <span><i class="fas fa-heart" style="margin-right: 8px;"></i> Wishlist Sepatu Impian</span>
+                <i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="menu-item">
+                <span><i class="fas fa-cog" style="margin-right: 8px;"></i> Pengaturan Akun</span>
+                <i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="menu-item">
+                <span><i class="fas fa-headset" style="margin-right: 8px;"></i> Pusat Bantuan</span>
+                <i class="fas fa-chevron-right"></i>
             </div>
         </div>
     </div>
@@ -435,7 +587,7 @@
         <div class="checkout-box">
             <strong>Alamat Pengiriman:</strong>
             <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">
-                <strong>Azariya</strong><br>
+                <strong>Azariya</strong> (+62 812-3456-7890)<br>
                 Jl. Cempaka Indah No. 45, Komplek Green Residence, Jakarta Selatan
             </p>
         </div>
@@ -480,7 +632,7 @@
         </div>
     </div>
 
-    <!-- BOTTOM NAVIGATION BAR (4 MENU) -->
+    <!-- BOTTOM NAVIGATION BAR -->
     <nav class="bottom-nav">
         <button class="nav-item active" id="nav-home" onclick="switchTab('home')">
             <i class="fas fa-home"></i>
@@ -662,7 +814,7 @@
             checkoutItems.forEach(item => {
                 total += item.price;
                 container.innerHTML += `
-                    <div style="display:flex; justify-shadow: space-between; font-size:0.85rem; margin-bottom:5px;">
+                    <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:5px;">
                         <span>${item.name}</span>
                         <strong>${formatRupiah(item.price)}</strong>
                     </div>
