@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vaciza - Trendy Clothing Store</title>
+    <!-- Font Awesome Icons & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-green: #5a7857;
+            --dark-green: #384c36;
+            --light-green: #e9efe8;
+            --accent-green: #88a385;
+            --bg-color: #f4f6f4;
+            --card-bg: #ffffff;
+            --text-main: #2c352b;
+            --text-muted: #738072;
+            --border-color: #dce3dc;
+            --shadow: 0 8px 24px rgba(56, 76, 54, 0.08);
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --radius-sm: 10px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #1a221a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: var(--text-main);
+        }
+
+        /* Container Simulator Frame Mobile */
+        .app-container {
+            width: 100%;
+            max-width: 414px;
+            height: 844px;
+            background-color: var(--bg-color);
+            border-radius: 40px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border: 8px solid #2b352a;
+        }
+
+        .status-bar {
+            height: 44px;
+            background: rgba(244, 246, 244, 0.85);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 24px;
+            font-size: 14px;
+            font-weight: 600;
+            z-index: 100;
+        }
+
+        .screen-content {
+            flex: 1;
+            overflow-y: auto;
+            padding-bottom: 90px;
+            display: none;
+            scroll-behavior: smooth;
+        }
+
+        .screen-content.active {
+            display: block;
+        }
+
+        .screen-content::-webkit-scrollbar {
+            display: none;
+        }
+
+        .header {
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--bg-color);
+            position: sticky;
+            top: 0;
+            z-index: 90;
+        }
+
+        .brand-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--dark-green);
+            letter-spacing: -0.5px;
+        }
+
+        .brand-subtitle {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .search-box {
+            margin: 0 20px 16px;
+            background: #ffffff;
+            border-radius: var(--radius-md);
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .search-box input {
+            border: none;
+            outline: none;
+            width: 100%;
+            font-size: 14px;
+            color: var(--text-main);
+            background: transparent;
+        }
+
+        .banner {
+            margin: 0 20px 20px;
+            background: linear-gradient(135deg, var(--dark-green), var(--primary-green));
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-header {
+            padding: 0 20px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--dark-green);
+        }
+
+        .product-scroll-row {
+            display: flex;
+            gap: 14px;
+            overflow-x: auto;
+            padding: 0 20px 16px;
+        }
+
+        .product-scroll-row::-webkit-scrollbar {
+            display: none;
+        }
+
+        .product-card-sm {
+            min-width: 150px;
+            width: 150px;
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 10px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(220, 227, 220, 0.5);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card-lg {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 12px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(220, 227, 220, 0.5);
+            margin: 0 20px 14px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .product-img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: var(--radius-sm);
+            background-color: var(--light-green);
+        }
+
+        .product-img-lg {
+            width: 90px;
+            height: 90px;
+            object-fit: cover;
+            border-radius: var(--radius-sm);
+            background-color: var(--light-green);
+        }
+
+        .badge-bestseller {
+            background: #e8f3e8;
+            color: var(--dark-green);
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 20px;
+            width: fit-content;
+            margin: 8px 0 4px;
+        }
+
+        .product-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .product-desc {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .product-price {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--dark-green);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .btn-action {
+            flex: 1;
+            padding: 8px 0;
+            border-radius: 8px;
+            border: none;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-cart {
+            background: var(--light-green);
+            color: var(--dark-green);
+        }
+
+        .btn-buy {
+            background: var(--primary-green);
+            color: white;
+        }
+
+        /* Cart Page */
+        .cart-item {
+            background: white;
+            margin: 0 20px 12px;
+            padding: 12px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        .cart-item img {
+            width: 70px;
+            height: 70px;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+
+        .cart-info {
+            flex: 1;
+        }
+
+        .cart-bottom-bar {
+            position: absolute;
+            bottom: 70px;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .btn-checkout {
+            background: var(--primary-green);
+            color: white;
+            padding: 12px 24px;
+            border-radius: var(--radius-md);
+            border: none;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        /* Profile Page */
+        .profile-header {
+            text-align: center;
+            padding: 20px;
+            background: white;
+            margin: 20px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+        }
+
+        .profile-avatar {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary-green);
+            margin-bottom: 12px;
+        }
+
+        .profile-card {
+            background: white;
+            margin: 0 20px 14px;
+            padding: 16px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        .profile-card label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        /* Status Orders & Payment */
+        .order-card {
+            background: white;
+            margin: 0 20px 14px;
+            padding: 16px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        .order-status-badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            display: inline-block;
+        }
+
+        .status-packing { background: #fff3cd; color: #856404; }
+        .status-done { background: #d4edda; color: #155724; }
+
+        .payment-screen {
+            background: white;
+            min-height: 100%;
+            padding: 20px;
+        }
+
+        .payment-option-card {
+            background: var(--light-green);
+            border: 2px solid var(--primary-green);
+            padding: 16px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 16px;
+        }
+
+        .thankyou-screen {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 30px;
+            background: white;
+        }
+
+        /* Bottom Nav */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background: #ffffff;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-top: 1px solid var(--border-color);
+            border-bottom-left-radius: 32px;
+            border-bottom-right-radius: 32px;
+            z-index: 100;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: var(--text-muted);
+            font-size: 11px;
+            font-weight: 500;
+            cursor: pointer;
+            width: 25%;
+        }
+
+        .nav-item.active {
+            color: var(--dark-green);
+            font-weight: 700;
+        }
+
+        .badge-count {
+            position: absolute;
+            top: -4px;
+            right: -8px;
+            background: var(--dark-green);
+            color: white;
+            font-size: 9px;
+            padding: 2px 5px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <span>09:41</span>
+            <div style="display: flex; gap: 6px;">
+                <i class="fa-solid fa-signal"></i>
+                <i class="fa-solid fa-wifi"></i>
+                <i class="fa-solid fa-battery-full"></i>
+            </div>
+        </div>
+
+        <!-- 1. HALAMAN BERANDA -->
+        <div id="screen-home" class="screen-content active">
+            <div class="header">
+                <div>
+                    <div class="brand-title">VACIZA</div>
+                    <div class="brand-subtitle">Modern Streetwear & Essentials</div>
+                </div>
+                <div style="width: 36px; height: 36px; background: var(--light-green); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--dark-green);">
+                    <i class="fa-regular fa-bell"></i>
+                </div>
+            </div>
+
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass" style="color: var(--text-muted);"></i>
+                <input type="text" placeholder="Cari pakaian trendy, jacket, knitwear...">
+            </div>
+
+            <div class="banner">
+                <h3>Koleksi Aesthetic 2026</h3>
+                <p>Diskon hingga 30% untuk pilihan outfit minimalist terbaik.</p>
+            </div>
+
+            <!-- Bestseller (5 Produk) -->
+            <div class="section-header">
+                <div class="section-title">🔥 Bestseller Products</div>
+            </div>
+            <div class="product-scroll-row" id="bestseller-list"></div>
+
+            <!-- Produk biasa (5 Produk) -->
+            <div class="section-header" style="margin-top: 10px;">
+                <div class="section-title">✨ Katalog Pilihan</div>
+            </div>
+            <div id="regular-list"></div>
+        </div>
+
+        <!-- 2. HALAMAN KERANJANG -->
+        <div id="screen-cart" class="screen-content">
+            <div class="header">
+                <div class="brand-title">Keranjang Saya</div>
+            </div>
+            <div id="cart-items-container" style="margin-bottom: 100px;"></div>
+            <div class="cart-bottom-bar">
+                <div>
+                    <span style="font-size: 12px; color: var(--text-muted);">Total Pembayaran:</span>
+                    <div id="cart-total-price" style="font-size: 16px; font-weight: 700; color: var(--dark-green);">Rp 0</div>
+                </div>
+                <button class="btn-checkout" onclick="proceedCartToCheckout()">Checkout</button>
+            </div>
+        </div>
+
+        <!-- 3. HALAMAN PROFIL (Atas nama Azariya) -->
+        <div id="screen-profile" class="screen-content">
+            <div class="header">
+                <div class="brand-title">Profil Pengguna</div>
+            </div>
+            <div class="profile-header">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80" alt="Foto Profil" class="profile-avatar">
+                <div style="font-size: 18px; font-weight: 700; color: var(--dark-green);">Azariya</div>
+                <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Member Premium Vaciza</div>
+            </div>
+
+            <div class="profile-card">
+                <label>Nama Lengkap</label>
+                <p>Azariya</p>
+            </div>
+
+            <div class="profile-card">
+                <label>Email</label>
+                <p>azariya.fashion@gmail.com</p>
+            </div>
+
+            <div class="profile-card">
+                <label>Alamat Pengiriman Utama</label>
+                <p>Jl. Senopati No. 88, Kebayoran Baru, Jakarta Selatan, DKI Jakarta (Kode Pos: 12190)</p>
+            </div>
+        </div>
+
+        <!-- 4. HALAMAN MANTAU PESANAN -->
+        <div id="screen-orders" class="screen-content">
+            <div class="header">
+                <div class="brand-title">Status Pesanan</div>
+            </div>
+            <div id="orders-container"></div>
+        </div>
+
+        <!-- HALAMAN METODE BAYAR (KHUSUS COD) -->
+        <div id="screen-checkout" class="screen-content">
+            <div class="header">
+                <i class="fa-solid fa-arrow-left" style="font-size: 18px; cursor: pointer;" onclick="navTo('home')"></i>
+                <div class="brand-title" style="font-size: 18px;">Metode Pembayaran</div>
+                <div></div>
+            </div>
+
+            <div class="payment-screen">
+                <h4 style="font-size: 14px; margin-bottom: 8px;">Rincian Pengiriman</h4>
+                <div style="background: var(--bg-color); padding: 12px; border-radius: 12px; margin-bottom: 20px;">
+                    <strong style="font-size: 13px;">Penerima: Azariya</strong>
+                    <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Jl. Senopati No. 88, Kebayoran Baru, Jakarta Selatan</p>
+                </div>
+
+                <h4 style="font-size: 14px; margin-bottom: 8px;">Metode Pembayaran Tersedia</h4>
+                <div class="payment-option-card">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <i class="fa-solid fa-hand-holding-dollar" style="font-size: 24px; color: var(--dark-green);"></i>
+                        <div>
+                            <strong style="font-size: 14px; color: var(--dark-green);">COD (Cash On Delivery)</strong>
+                            <p style="font-size: 11px; color: var(--text-muted);">Bayar tunai langsung saat barang sampai di rumah.</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-circle-check" style="color: var(--primary-green); font-size: 20px;"></i>
+                </div>
+
+                <div style="margin-top: 30px; border-top: 1px dashed var(--border-color); padding-top: 16px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 13px;">
+                        <span>Subtotal Products</span>
+                        <span id="checkout-subtotal">Rp 0</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 13px;">
+                        <span>Ongkos Kirim</span>
+                        <span>Rp 15.000</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-size: 16px; font-weight: 700; color: var(--dark-green); margin-top: 12px;">
+                        <span>Total Bayar (COD)</span>
+                        <span id="checkout-total">Rp 0</span>
+                    </div>
+                </div>
+
+                <button class="btn-checkout" style="width: 100%; margin-top: 30px; padding: 14px;" onclick="confirmOrderCOD()">Klik Checkout Sekarang</button>
+            </div>
+        </div>
+
+        <!-- HALAMAN TERIMA KASIH -->
+        <div id="screen-thankyou" class="screen-content">
+            <div class="thankyou-screen">
+                <div style="width: 80px; height: 80px; background: var(--light-green); color: var(--primary-green); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 36px; margin-bottom: 20px;">
+                    <i class="fa-solid fa-heart"></i>
+                </div>
+                <h2 style="color: var(--dark-green); margin-bottom: 10px;">Terima Kasih Telah Berbelanja!</h2>
+                <p style="color: var(--text-muted); font-size: 13px; line-height: 1.5; margin-bottom: 24px;">
+                    Pesanan Anda di <strong style="color: var(--dark-green);">Vaciza</strong> telah berhasil dibuat dengan metode <strong>COD (Cash On Delivery)</strong>.<br>Silakan siapkan uang pas saat kurir tiba!
+                </p>
+                <button class="btn-checkout" onclick="navTo('orders')">Lihat Status Pesanan</button>
+            </div>
+        </div>
+
+        <!-- 4 NAV BAR BAWAH -->
+        <div class="bottom-nav">
+            <div class="nav-item active" onclick="navTo('home')" id="nav-home">
+                <i class="fa-solid fa-house" style="font-size: 18px;"></i>
+                <span>Beranda</span>
+            </div>
+            <div class="nav-item" onclick="navTo('cart')" id="nav-cart">
+                <div style="position: relative;">
+                    <i class="fa-solid fa-bag-shopping" style="font-size: 18px;"></i>
+                    <span class="badge-count" id="cart-badge">0</span>
+                </div>
+                <span>Keranjang</span>
+            </div>
+            <div class="nav-item" onclick="navTo('profile')" id="nav-profile">
+                <i class="fa-solid fa-user" style="font-size: 18px;"></i>
+                <span>Profil</span>
+            </div>
+            <div class="nav-item" onclick="navTo('orders')" id="nav-orders">
+                <i class="fa-solid fa-truck-fast" style="font-size: 18px;"></i>
+                <span>Pesanan</span>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Data 5 Produk Bestseller
+        const bestsellers = [
+            { id: 1, name: "Oversized Sage Hoodie", price: 249000, desc: "Bahan Heavyweight Cotton Fleece Premium, Nyaman & Minimalis", img: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=400&auto=format&fit=crop&q=80" },
+            { id: 2, name: "Olive Knit Cardigan", price: 219000, desc: "Rajut Vintage Oversized fit khas Korean Style", img: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=400&auto=format&fit=crop&q=80" },
+            { id: 3, name: "Earth Tone Work Jacket", price: 289000, desc: "Jaket Twill Boxy Cut kekinian cocok untuk outerwear layer", img: "https://images.unsplash.com/photo-1548883354-7622d03aca27?w=400&auto=format&fit=crop&q=80" },
+            { id: 4, name: "Minimalist Olive Tee", price: 129000, desc: "Kaos Plain Cotton Combed 24s breathable & fungsional", img: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=400&auto=format&fit=crop&q=80" },
+            { id: 5, name: "Sage Pleated Trousers", price: 239000, desc: "Celana Bahan High-waist Ankle Relaxed Fit stylish", img: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400&auto=format&fit=crop&q=80" }
+        ];
+
+        // Data 5 Produk Biasa
+        const regularProducts = [
+            { id: 6, name: "Casual Linen Shirt", price: 189000, desc: "Kemeja Linen santai warna Sage Grey sejuk untuk harian", img: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=400&auto=format&fit=crop&q=80" },
+            { id: 7, name: "Boxy Clean Crewneck", price: 229000, desc: "Sweater Crewneck potongan Boxy aesthetic look", img: "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=400&auto=format&fit=crop&q=80" },
+            { id: 8, name: "Cargo Loose Pants", price: 259000, desc: "Celana Cargo Modern Streetwear banyak kantong fungsional", img: "https://images.unsplash.com/photo-1517445312882-bc9910d016b7?w=400&auto=format&fit=crop&q=80" },
+            { id: 9, name: "Vintage Corduroy Outer", price: 279000, desc: "Outer Kemeja bahan Corduroy lembut bertema earth-tone", img: "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=400&auto=format&fit=crop&q=80" },
+            { id: 10, name: "Aesthetic Polo Knit", price: 179000, desc: "Polo Shirt Rajut Halus model Retro Clean Look", img: "https://images.unsplash.com/photo-1625910513413-3fc215c23ef3?w=400&auto=format&fit=crop&q=80" }
+        ];
+
+        let cart = [];
+        let pendingCheckoutPrice = 0;
+        let ordersHistory = [
+            { id: "VCZ-8821", item: "Oversized Sage Hoodie", price: 264000, status: "Di Kemas", date: "5 Ags 2026" },
+            { id: "VCZ-7412", item: "Sage Pleated Trousers", price: 254000, status: "Selesai", date: "1 Ags 2026" }
+        ];
+
+        function formatRp(price) {
+            return "Rp " + price.toLocaleString('id-ID');
+        }
+
+        function renderHomeProducts() {
+            const bestsellerContainer = document.getElementById('bestseller-list');
+            bestsellerContainer.innerHTML = bestsellers.map(p => `
+                <div class="product-card-sm">
+                    <img src="${p.img}" class="product-img" alt="${p.name}">
+                    <span class="badge-bestseller">Best Seller</span>
+                    <div class="product-title">${p.name}</div>
+                    <div class="product-desc">${p.desc}</div>
+                    <div class="product-price">${formatRp(p.price)}</div>
+                    <div class="btn-group">
+                        <button class="btn-action btn-cart" onclick="addToCart(${p.id}, 'bestseller')">+ Cart</button>
+                        <button class="btn-action btn-buy" onclick="buyNow(${p.id}, 'bestseller')">Beli</button>
+                    </div>
+                </div>
+            `).join('');
+
+            const regularContainer = document.getElementById('regular-list');
+            regularContainer.innerHTML = regularProducts.map(p => `
+                <div class="product-card-lg">
+                    <img src="${p.img}" class="product-img-lg" alt="${p.name}">
+                    <div style="flex:1;">
+                        <div class="product-title">${p.name}</div>
+                        <div class="product-desc">${p.desc}</div>
+                        <div class="product-price">${formatRp(p.price)}</div>
+                        <div class="btn-group" style="width: 180px;">
+                            <button class="btn-action btn-cart" onclick="addToCart(${p.id}, 'regular')">+ Keranjang</button>
+                            <button class="btn-action btn-buy" onclick="buyNow(${p.id}, 'regular')">Beli Sekarang</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addToCart(productId, type) {
+            const list = type === 'bestseller' ? bestsellers : regularProducts;
+            const item = list.find(p => p.id === productId);
+            if(item) {
+                cart.push(item);
+                updateCartBadge();
+                alert(`${item.name} berhasil dimasukkan ke keranjang!`);
+            }
+        }
+
+        function buyNow(productId, type) {
+            const list = type === 'bestseller' ? bestsellers : regularProducts;
+            const item = list.find(p => p.id === productId);
+            if(item) {
+                pendingCheckoutPrice = item.price;
+                openCheckout(pendingCheckoutPrice);
+            }
+        }
+
+        function updateCartBadge() {
+            document.getElementById('cart-badge').innerText = cart.length;
+        }
+
+        function renderCart() {
+            const container = document.getElementById('cart-items-container');
+            if(cart.length === 0) {
+                container.innerHTML = `<div style="text-align:center; padding: 40px; color: var(--text-muted);">Keranjang kamu masih kosong 🛒</div>`;
+                document.getElementById('cart-total-price').innerText = "Rp 0";
+                return;
+            }
+
+            container.innerHTML = cart.map((item, idx) => `
+                <div class="cart-item">
+                    <input type="checkbox" checked onchange="calculateCartTotal()">
+                    <img src="${item.img}" alt="${item.name}">
+                    <div class="cart-info">
+                        <h4>${item.name}</h4>
+                        <p>${formatRp(item.price)}</p>
+                    </div>
+                    <i class="fa-solid fa-trash" style="color: #c85a5a; cursor: pointer;" onclick="removeFromCart(${idx})"></i>
+                </div>
+            `).join('');
+
+            calculateCartTotal();
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartBadge();
+            renderCart();
+        }
+
+        function calculateCartTotal() {
+            let total = 0;
+            const checkboxes = document.querySelectorAll('#cart-items-container input[type="checkbox"]');
+            checkboxes.forEach((cb, idx) => {
+                if(cb.checked && cart[idx]) {
+                    total += cart[idx].price;
+                }
+            });
+            pendingCheckoutPrice = total;
+            document.getElementById('cart-total-price').innerText = formatRp(total);
+        }
+
+        function proceedCartToCheckout() {
+            if(pendingCheckoutPrice <= 0) {
+                alert("Pilih minimal 1 barang di keranjang untuk checkout!");
+                return;
+            }
+            openCheckout(pendingCheckoutPrice);
+        }
+
+        function openCheckout(subtotal) {
+            document.getElementById('checkout-subtotal').innerText = formatRp(subtotal);
+            document.getElementById('checkout-total').innerText = formatRp(subtotal + 15000);
+            
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.screen-content').forEach(s => s.classList.remove('active'));
+            document.getElementById('screen-checkout').classList.add('active');
+        }
+
+        function confirmOrderCOD() {
+            ordersHistory.unshift({
+                id: "VCZ-" + Math.floor(1000 + Math.random() * 9000),
+                item: "Pakaian Vaciza",
+                price: pendingCheckoutPrice + 15000,
+                status: "Di Kemas",
+                date: "Hari ini"
+            });
+
+            cart = [];
+            updateCartBadge();
+
+            document.querySelectorAll('.screen-content').forEach(s => s.classList.remove('active'));
+            document.getElementById('screen-thankyou').classList.add('active');
+        }
+
+        function renderOrders() {
+            const container = document.getElementById('orders-container');
+            container.innerHTML = ordersHistory.map(o => `
+                <div class="order-card">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
+                        <span style="font-size: 11px; color: var(--text-muted);">${o.id} • ${o.date}</span>
+                        <span class="order-status-badge ${o.status === 'Di Kemas' ? 'status-packing' : 'status-done'}">${o.status}</span>
+                    </div>
+                    <strong style="font-size: 14px; color: var(--text-main);">${o.item}</strong>
+                    <div style="margin-top: 8px; font-size: 13px; font-weight: 700; color: var(--dark-green);">
+                        Total: ${formatRp(o.price)} (COD)
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function navTo(screen) {
+            document.querySelectorAll('.screen-content').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+
+            document.getElementById(`screen-${screen}`).classList.add('active');
+            const navBtn = document.getElementById(`nav-${screen}`);
+            if(navBtn) navBtn.classList.add('active');
+
+            if(screen === 'cart') renderCart();
+            if(screen === 'orders') renderOrders();
+        }
+
+        renderHomeProducts();
+    </script>
+</body>
+</html>
