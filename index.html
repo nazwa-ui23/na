@@ -236,68 +236,64 @@
             border-top: 1px solid var(--light-green);
         }
 
-        /* PROFILE PAGE (LENGKAP & TIDAK KOSONG) */
+        /* PROFILE PAGE DESAIN BARU */
         .profile-card {
             background: #fff;
             border-radius: 16px;
             padding: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             border: 1px solid var(--light-green);
-            margin-bottom: 15px;
+            position: relative;
+            overflow: hidden;
         }
 
-        .profile-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid var(--light-green);
+        .profile-header-bg {
+            height: 70px;
+            background: linear-gradient(135deg, var(--accent-green), var(--primary-green));
+            margin: -20px -20px 0 -20px;
         }
 
         .profile-img {
-            width: 75px;
-            height: 75px;
+            width: 90px;
+            height: 90px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid var(--accent-green);
-        }
-
-        .profile-name {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--dark-green);
+            margin-top: -45px;
+            margin-bottom: 8px;
+            border: 4px solid #ffffff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
         }
 
         .profile-badge {
             display: inline-block;
-            background-color: var(--light-green);
+            background: var(--light-green);
             color: var(--dark-green);
-            font-size: 0.7rem;
-            font-weight: bold;
-            padding: 2px 8px;
-            border-radius: 10px;
-            margin-top: 4px;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            border: 1px solid var(--accent-green);
         }
 
         .profile-stats {
             display: flex;
             justify-content: space-around;
             padding: 12px 0;
-            background-color: var(--bg-color);
+            background: var(--bg-color);
             border-radius: 10px;
-            margin: 15px 0;
-            text-align: center;
+            margin-bottom: 15px;
         }
 
         .stat-item {
-            display: flex;
-            flex-direction: column;
+            text-align: center;
         }
 
         .stat-value {
-            font-weight: 700;
+            font-weight: bold;
             color: var(--dark-green);
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
 
         .stat-label {
@@ -306,28 +302,25 @@
         }
 
         .profile-info-group {
+            text-align: left;
             display: flex;
             flex-direction: column;
             gap: 12px;
         }
 
-        .info-item {
+        .info-row {
             display: flex;
             align-items: flex-start;
             gap: 12px;
+            padding: 12px;
+            background: var(--bg-color);
+            border-radius: 8px;
         }
 
-        .info-icon {
-            width: 32px;
-            height: 32px;
-            background-color: var(--light-green);
-            color: var(--dark-green);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.85rem;
-            flex-shrink: 0;
+        .info-row i {
+            color: var(--primary-green);
+            font-size: 1.1rem;
+            margin-top: 3px;
         }
 
         .profile-label {
@@ -339,34 +332,6 @@
             font-size: 0.85rem;
             font-weight: 600;
             color: var(--text-dark);
-            line-height: 1.3;
-        }
-
-        .profile-menu {
-            background: #fff;
-            border-radius: 16px;
-            overflow: hidden;
-            border: 1px solid var(--light-green);
-        }
-
-        .menu-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 12px 15px;
-            border-bottom: 1px solid var(--light-green);
-            color: var(--text-dark);
-            font-size: 0.85rem;
-            font-weight: 500;
-            cursor: pointer;
-        }
-
-        .menu-item:last-child {
-            border-bottom: none;
-        }
-
-        .menu-item i {
-            color: var(--text-muted);
         }
 
         /* CHECKOUT & SUCCESS PAGE */
@@ -499,77 +464,54 @@
         </div>
     </div>
 
-    <!-- 3. PROFIL VIEW (DIPERBARUI AGAR TIDAK KOSONG) -->
+    <!-- 3. PROFIL VIEW -->
     <div id="view-profile" class="page-view">
         <div class="section-title"><i class="fas fa-user-circle"></i> Profil Saya</div>
-        
         <div class="profile-card">
-            <div class="profile-header">
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&q=80" alt="Foto Profil Azariya" class="profile-img">
-                <div>
-                    <div class="profile-name">Azariya</div>
-                    <span class="profile-badge"><i class="fas fa-crown"></i> VIP Member</span>
-                </div>
-            </div>
+            <div class="profile-header-bg"></div>
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&q=80" alt="Foto Profil Azariya" class="profile-img">
+            <h3 style="color: var(--dark-green); margin-bottom: 2px;">Azariya</h3>
+            <span class="profile-badge"><i class="fas fa-crown"></i> VIP Member</span>
 
             <div class="profile-stats">
                 <div class="stat-item">
-                    <span class="stat-value" id="stat-order-count">0</span>
-                    <span class="stat-label">Pesanan</span>
+                    <div class="stat-value">5</div>
+                    <div class="stat-label">Beli</div>
+                </div>
+                <div class="stat-item" style="border-left: 1px solid #ddd; border-right: 1px solid #ddd; padding: 0 15px;">
+                    <div class="stat-value">Aktif</div>
+                    <div class="stat-label">Status COD</div>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-value" id="stat-cart-count">0</span>
-                    <span class="stat-label">Keranjang</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-value">2</span>
-                    <span class="stat-label">Voucher</span>
+                    <div class="stat-value">100%</div>
+                    <div class="stat-label">Terverifikasi</div>
                 </div>
             </div>
             
             <div class="profile-info-group">
-                <div class="info-item">
-                    <div class="info-icon"><i class="fas fa-envelope"></i></div>
+                <div class="info-row">
+                    <i class="fas fa-envelope"></i>
                     <div>
                         <div class="profile-label">Email</div>
                         <div class="profile-value">azariya.vaciza@email.com</div>
                     </div>
                 </div>
 
-                <div class="info-item">
-                    <div class="info-icon"><i class="fas fa-phone"></i></div>
+                <div class="info-row">
+                    <i class="fas fa-phone-alt"></i>
                     <div>
                         <div class="profile-label">Nomor Telepon</div>
                         <div class="profile-value">+62 812-3456-7890</div>
                     </div>
                 </div>
 
-                <div class="info-item">
-                    <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+                <div class="info-row">
+                    <i class="fas fa-map-marker-alt"></i>
                     <div>
-                        <div class="profile-label">Alamat Pengiriman Utama</div>
+                        <div class="profile-label">Alamat Utama Pengiriman</div>
                         <div class="profile-value">Jl. Cempaka Indah No. 45, Komplek Green Residence, Jakarta Selatan, 12410</div>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="profile-menu">
-            <div class="menu-item" onclick="switchTab('orders')">
-                <span><i class="fas fa-box" style="margin-right: 8px;"></i> Riwayat Pesanan</span>
-                <i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="menu-item">
-                <span><i class="fas fa-heart" style="margin-right: 8px;"></i> Wishlist Sepatu Impian</span>
-                <i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="menu-item">
-                <span><i class="fas fa-cog" style="margin-right: 8px;"></i> Pengaturan Akun</span>
-                <i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="menu-item">
-                <span><i class="fas fa-headset" style="margin-right: 8px;"></i> Pusat Bantuan</span>
-                <i class="fas fa-chevron-right"></i>
             </div>
         </div>
     </div>
@@ -632,7 +574,7 @@
         </div>
     </div>
 
-    <!-- BOTTOM NAVIGATION BAR -->
+    <!-- BOTTOM NAVIGATION BAR (4 MENU) -->
     <nav class="bottom-nav">
         <button class="nav-item active" id="nav-home" onclick="switchTab('home')">
             <i class="fas fa-home"></i>
@@ -652,22 +594,22 @@
             <span>Pesanan</span>
         </button>
     </nav>
+
     <script>
-        // DATA 10 PRODUK SEPATU
+        // DATA TOTAL 9 PRODUK SEPATU (Sepatu Osmos dihapus total)
         const products = [
-            // 5 BESTSELLER
+            // 4 BESTSELLER
             { id: 1, name: "Sepatu Vachirawit", price: 2499000, isBestseller: true, image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80", desc: "Sepatu edisi terbatas dengan warna merah ikonik. Nyaman dipakai harian." },
             { id: 2, name: "Sepatu Bieber", price: 2899000, isBestseller: true, image: "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=500&q=80", desc: "Desain hypebeast bernuansa streetwear modern dengan bantalan empuk." },
             { id: 3, name: "Sepatu Jenner", price: 2199000, isBestseller: true, image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=500&q=80", desc: "Sepatu warna pastel kasual yang elegan dan modis di segala situasi." },
-            { id: 4, name: "Sepatu Osmos", price: 1999000, isBestseller: true, image: "https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?w=500&q=80", desc: "Kombinasi performa lari unggulan dan estetika tinggi. Ringan & responsif." },
-            { id: 5, name: "Sepatu Sies", price: 2650000, isBestseller: true, image: "https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=500&q=80", desc: "Silhouette klasik berbalut material premium yang kokoh dan tahan lama." },
+            { id: 4, name: "Sepatu Sies", price: 2650000, isBestseller: true, image: "https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=500&q=80", desc: "Silhouette klasik berbalut material premium yang kokoh dan tahan lama." },
             
             // 5 REGULER
-            { id: 6, name: "Sepatu Moncu", price: 1499000, isBestseller: false, image: "https://images.unsplash.com/photo-1515955656352-a1fa3ffcd111?w=500&q=80", desc: "Sneakers bernuansa biru klasik, cocok dikombinasikan dengan denim." },
-            { id: 7, name: "Sepatu Late", price: 1299000, isBestseller: false, image: "https://images.unsplash.com/photo-1552346154-21d32810aba3?w=500&q=80", desc: "Sepatu olahraga serbaguna dengan sirkulasi udara optimal." },
-            { id: 8, name: "Sepatu Bioa", price: 1599000, isBestseller: false, image: "https://images.unsplash.com/photo-1579338559194-a162d19bf842?w=500&q=80", desc: "Desain futuristik dengan fleksibilitas tinggi untuk workout santai." },
-            { id: 9, name: "Sepatu Waswac", price: 1399000, isBestseller: false, image: "https://images.unsplash.com/photo-1605348532760-6753d2c43329?w=500&q=80", desc: "Sepatu serba hitam yang simpel dan gagah untuk segala suasana." },
-            { id: 10, name: "Sepatu Rules", price: 1199000, isBestseller: false, image: "https://images.unsplash.com/photo-1511556532299-8f662fc26c06?w=500&q=80", desc: "Sepatu bergaya retro runner yang ramping dan ringan saat melangkah." }
+            { id: 5, name: "Sepatu Moncu", price: 1499000, isBestseller: false, image: "https://images.unsplash.com/photo-1515955656352-a1fa3ffcd111?w=500&q=80", desc: "Sneakers bernuansa biru klasik, cocok dikombinasikan dengan denim." },
+            { id: 6, name: "Sepatu Late", price: 1299000, isBestseller: false, image: "https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?w=500&q=80", desc: "Sepatu olahraga serbaguna dengan sirkulasi udara optimal." },
+            { id: 7, name: "Sepatu Bioa", price: 1599000, isBestseller: false, image: "https://images.unsplash.com/photo-1579338559194-a162d19bf842?w=500&q=80", desc: "Desain futuristik dengan fleksibilitas tinggi untuk workout santai." },
+            { id: 8, name: "Sepatu Waswac", price: 1399000, isBestseller: false, image: "https://images.unsplash.com/photo-1605348532760-6753d2c43329?w=500&q=80", desc: "Sepatu serba hitam yang simpel dan gagah untuk segala suasana." },
+            { id: 9, name: "Sepatu Rules", price: 1199000, isBestseller: false, image: "https://images.unsplash.com/photo-1511556532299-8f662fc26c06?w=500&q=80", desc: "Sepatu bergaya retro runner yang ramping dan ringan saat melangkah." }
         ];
 
         let cart = [];
